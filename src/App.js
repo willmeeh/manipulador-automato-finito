@@ -1,21 +1,32 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Row, Col } from 'antd'
+
+import InputForm from './form/Form';
 
 class App extends Component {
+  state = {
+    formPayload: {}
+  }
+
+  handleFormStateChange = (formPayload) => {
+    this.setState({ formPayload });
+
+    console.log('formPayload', formPayload);
+  };
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+          <Row style={{ background: '#ECECEC', padding: '30px' }} >
+            <Col md={16}>
+                <InputForm handleStateChange={this.handleFormStateChange} />
+            </Col>
+          </Row>
       </div>
     );
   }
 }
 
 export default App;
+
