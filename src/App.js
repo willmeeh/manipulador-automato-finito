@@ -3,6 +3,7 @@ import './App.css';
 import { Row, Col } from 'antd'
 
 import InputForm from './form/Form';
+import VerificadorAfnAfnd from './helpers/VerificadorAfnAfnd';
 
 class App extends Component {
   state = {
@@ -21,6 +22,13 @@ class App extends Component {
           <Row style={{ background: '#ECECEC', padding: '30px' }} >
             <Col md={16}>
                 <InputForm handleStateChange={this.handleFormStateChange} />
+            </Col>
+            <Col md={8}>
+              <Row>
+                <Col md={24}>
+                  <VerificadorAfnAfnd formPayload={this.state.formPayload} />
+                </Col>
+              </Row>
             </Col>
           </Row>
       </div>
