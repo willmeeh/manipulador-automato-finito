@@ -14,7 +14,7 @@ class InputForm extends Component {
 			{ // (q0,0) = q2
 				estado: 'q0',
 				simbolo: '0',
-				resultado: 'q2'
+				resultado: ['q2','q1']
 			},
 			{ // (q0,1) = q0
 				estado: 'q0',
