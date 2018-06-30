@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Card } from 'antd';
+import _ from 'lodash';
 
 import { agruparTransicoesPorEstado } from './index';
 
@@ -10,7 +11,7 @@ export default class VerificadorAfnAfnd extends Component {
 			const transicoesPorEstado = agruparTransicoesPorEstado(formPayload.transicoes);
 			const resultados = this.agruparResultados(transicoesPorEstado);
 			for (var key in resultados) {
-				if (this.hasDuplicates(resultados[key])) {
+				if (this.hasDuplicates(resultados[key], key)) {
 					return 'Autômato finito não determinístico (AFND)';
 				}
 			}
@@ -26,12 +27,11 @@ export default class VerificadorAfnAfnd extends Component {
 			const resultadosDasTransicoes = [];
 
 			transicoesPorEstado[key].forEach((transicao) => {
-				resultadosDasTransicoes.push(transicao.resultado)
+				resultadosDasTransicoes.push(transicao)
 			});
 
 			resultados[key] = resultadosDasTransicoes;
 		}
-
 		return resultados;
 	}
 
@@ -42,15 +42,8 @@ export default class VerificadorAfnAfnd extends Component {
 	 * @return {boolean}
 	 */
 	hasDuplicates(array) {
-    var valuesSoFar = [];
-    for (var i = 0; i < array.length; ++i) {
-        var value = array[i];
-        if (valuesSoFar.indexOf(value) !== -1) {
-            return true;
-        }
-        valuesSoFar.push(value);
-    }
-    return false;
+		const arrayUniq = _.uniqWith(array, _.isEqual);
+		return arrayUniq.length !== array.length;
 	}
 
 	render() {
