@@ -1,9 +1,7 @@
-import React, { Component, Fragment } from 'react';
-import { Button, Form, Icon, Input, Row, Col, Tag, Select, Card } from 'antd';
+import React, { Component } from 'react';
+import { Form } from 'antd';
 
 const FormItem = Form.Item;
-const Option = Select.Option;
-const { Search } = Input;
 
 class InputForm extends Component {
 
