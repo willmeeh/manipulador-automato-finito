@@ -12,3 +12,9 @@ export const agruparTransicoesPorEstado = (transicoes) => {
 
   return transicoesPorEstado;
 }
+
+export const getTransicoesDoEstadoInicial = (transicoes, estadoInicial) => {
+  return transicoes.filter((transicao) => {
+    return transicao.estado === estadoInicial;
+  });
+}

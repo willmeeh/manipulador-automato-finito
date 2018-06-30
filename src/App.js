@@ -5,6 +5,7 @@ import { Row, Col } from 'antd'
 import InputForm from './form/Form';
 import VerificadorAfnAfnd from './helpers/VerificadorAfnAfnd';
 import VerificarSePertenceALinguagem from './helpers/VerificarSePertenceALinguagem';
+import MinimizarAfd from './helpers//MinimizarAfd';
 
 class App extends Component {
   state = {
@@ -31,6 +32,9 @@ class App extends Component {
                 </Col>
                 <Col md={24}>
                   <VerificarSePertenceALinguagem formPayload={this.state.formPayload} />
+                </Col>
+                <Col md={24}>
+                  <MinimizarAfd formPayload={this.state.formPayload} />
                 </Col>
               </Row>
             </Col>
