@@ -1,13 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import { Card } from 'antd';
 
+import { agruparTransicoesPorEstado } from './index';
+
 export default class VerificadorAfnAfnd extends Component {
 
   analisar(formPayload) {
 		if (formPayload.transicoes) {
-			const transicoesPorEstado = this.agruparTransicoesPorEstado(formPayload.transicoes);
+			const transicoesPorEstado = agruparTransicoesPorEstado(formPayload.transicoes);
 			const resultados = this.agruparResultados(transicoesPorEstado);
-
 			for (var key in resultados) {
 				if (this.hasDuplicates(resultados[key])) {
 					return 'Autômato finito não determinístico (AFND)';
@@ -32,21 +33,6 @@ export default class VerificadorAfnAfnd extends Component {
 		}
 
 		return resultados;
-	}
-
-	agruparTransicoesPorEstado(transicoes) {
-		const transicoesPorEstado = {};
-
-		transicoes.forEach(transicao => {
-			if (transicoesPorEstado[transicao.estado]) {
-				transicoesPorEstado[transicao.estado].push(transicao);
-			}
-			else {
-				transicoesPorEstado[transicao.estado] = [transicao];
-			}
-		});
-
-		return transicoesPorEstado;
 	}
 
 	/**
