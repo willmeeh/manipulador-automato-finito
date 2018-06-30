@@ -40,6 +40,16 @@ class InputForm extends Component {
 				estado: 'q2',
 				simbolo: '1',
 				resultado: 'q1'
+			},
+			{ // (q3,1) = q1 (estado inacessível)
+				estado: 'q3',
+				simbolo: '1',
+				resultado: 'q1'
+			},
+			{ // (q3,1) = q1 (estado inacessível)
+				estado: 'q3',
+				simbolo: '1',
+				resultado: 'q3'
 			}
 		]
 	};
