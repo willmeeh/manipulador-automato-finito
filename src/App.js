@@ -6,6 +6,7 @@ import InputForm from './form/Form';
 import VerificadorAfnAfnd from './helpers/VerificadorAfnAfnd';
 import VerificarSePertenceALinguagem from './helpers/VerificarSePertenceALinguagem';
 import AfndToAfd from './helpers/afnd-to-afd/AfndToAfd';
+import MinimizarAfd from './helpers//MinimizarAfd';
 
 class App extends Component {
   state = {
@@ -35,6 +36,9 @@ class App extends Component {
                 </Col>
                 <Col md={24}>
                   <AfndToAfd formPayload={this.state.formPayload} />
+                </Col>
+                <Col md={24}>
+                  <MinimizarAfd formPayload={this.state.formPayload} />
                 </Col>
               </Row>
             </Col>
