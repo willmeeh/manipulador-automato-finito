@@ -1,12 +1,17 @@
 import React, { Component, Fragment } from 'react';
-import { Card } from 'antd';
+import { Card, Row, Col, Input, Icon, Tag } from 'antd';
+import _ from 'lodash';
 
 import { agruparTransicoesPorEstado } from './index';
 
-// @TODO Trocar para variávei recebida pelo formulário
-const SIMBOLOS_A_SEREM_TESTADOS = ['0', '0', '1'];
+const { Search } = Input;
 
 export default class VerificadorAfnAfnd extends Component {
+
+  state = {
+    simbolosASeremTestados: ['0', '0', '1'],
+    simbolo: ''
+  }
 
   verificarSePertenceALinguagem(formPayload) {
 		if (formPayload.transicoes) {
@@ -33,7 +38,7 @@ export default class VerificadorAfnAfnd extends Component {
     const transicoes = [];
     const transicoesPorEstado = agruparTransicoesPorEstado(formPayload.transicoes);
 
-    SIMBOLOS_A_SEREM_TESTADOS.forEach((simbolo) => {
+    this.state.simbolosASeremTestados.forEach((simbolo) => {
 
       const possiveisCaminhos = transicoesPorEstado[estadoAtual];
 
@@ -81,15 +86,78 @@ export default class VerificadorAfnAfnd extends Component {
     return transicoesSimplificadas;
   }
 
+  	//Simbolos
+	addSimbolo = (s) => {
+    console.log('s', s)
+		if (s) {
+      this.setState({
+        simbolosASeremTestados: [...this.state.simbolosASeremTestados, s]
+      });
+		}
+		this.setState({
+			simbolo: ''
+		});
+	}
+
+  simboloOnChange = (e) => {
+		e.preventDefault();
+		const value = e.target.value;
+		if (!_.includes(this.props.formPayload.estados, value)) {
+			this.setState({
+				simbolo: value.charAt(value.length - 1)
+			});
+		}
+  }
+
+  delSimbolo = (index) => {
+		let newList = this.state.simbolosASeremTestados;
+		let s = newList.splice(index, 1);
+		this.setState({
+			simbolosASeremTestados: newList,
+			simbolo: s
+		});
+	}
+
 	render() {
 		const cardStyle = {
 			textAlign: 'center',
 		};
 		return (
 			<Fragment>
-				<Card style={cardStyle}>
-					<h1>{this.exibirTransicoes(this.props.formPayload)}</h1>
-          <h1>{this.exibirAceitaOuRejeita(this.props.formPayload)}</h1>
+        <Card style={cardStyle}>
+          <h2>Verificar se sepertence a linguagem:</h2>
+          <Card
+            className="text-left"
+            title={<b>Simbolos: </b>}
+            extra={
+              <Fragment>
+                <Search
+                  prefix={<Icon type="tag-o" />}
+                  placeholder="Simbolo"
+                  enterButton="Add"
+                  value={this.state.simbolo}
+                  onChange={this.simboloOnChange}
+                  onSearch={this.addSimbolo} />
+              </Fragment>
+            }
+          >
+            <Row>
+              <Col md={24} className="text-center">
+                {this.state.simbolosASeremTestados.map((nt, index) =>
+                  <Tag
+                    key={index}
+                    color="red"
+                    onClick={() => this.delSimbolo(index)}
+                    name={index}>
+                    {nt}
+                  </Tag>)}
+              </Col>
+            </Row>
+          </Card>
+          <Card style={cardStyle}>
+            <h1>{this.exibirTransicoes(this.props.formPayload)}</h1>
+            <h1>{this.exibirAceitaOuRejeita(this.props.formPayload)}</h1>
+          </Card>
 				</Card>
 			</Fragment>
 		);

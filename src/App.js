@@ -32,7 +32,7 @@ class App extends Component {
                   <VerificadorAfnAfnd formPayload={this.state.formPayload} />
                 </Col>
                 <Col md={24}>
-                 {/* <VerificarSePertenceALinguagem formPayload={this.state.formPayload} /> */}
+                 <VerificarSePertenceALinguagem formPayload={this.state.formPayload} />
                 </Col>
                 <Col md={24}>
                   <AfndToAfd formPayload={this.state.formPayload} />

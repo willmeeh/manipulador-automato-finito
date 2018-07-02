@@ -85,7 +85,6 @@ class InputForm extends Component {
 		});
 	}
 
-
 	simboloOnChange = (e) => {
 		e.preventDefault();
 		let value = e.target.value;
@@ -131,7 +130,7 @@ class InputForm extends Component {
 		}
 	}
 
-	//Selecionar inicial 
+	//Selecionar inicial
 	setEstadoInicial = (value, options) => {
 		this.setState({
 			estadoInicial: value
@@ -334,7 +333,7 @@ class InputForm extends Component {
 										className="text-left"
 										title={<b>Transicao {indexTransicao + 1}</b>}
 										extra={
-											<Fragment>	
+											<Fragment>
 												<Button
 													type="danger"
 													onClick={() => this.delTransicao(indexTransicao)}>

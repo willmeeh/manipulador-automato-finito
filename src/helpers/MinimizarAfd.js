@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import { Card } from 'antd';
-import _ from 'lodash';
 
 import { getTransicoesDoEstadoInicial } from './index';
 
@@ -9,6 +8,7 @@ export default class VerificadorAfnAfnd extends Component {
   analisar(formPayload) {
 		if (formPayload.transicoes) {
       const estados = this.removerEstadosInacessiveis(formPayload);
+      console.log('estados', estados);
 		}
 	};
 
