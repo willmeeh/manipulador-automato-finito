@@ -40,10 +40,14 @@ class App extends Component {
               <Col md={24}>
                 <VerificarSePertenceALinguagem formPayload={this.state.formPayload} />
               </Col>
+
               <Col md={24}>
                 <MinimizarAfd
                   formPayload={this.state.formPayload}
                 />
+              </Col>
+              <Col md={24}>
+                <TabelaDeTransicoes transicoes={this.state.formPayload.transicoes}/>
               </Col>
             </Row>
           </Col>

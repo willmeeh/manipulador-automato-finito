@@ -4,8 +4,8 @@ import { Card } from 'antd';
 export default class TabelaDeTransicoes extends Component {
 
   renderizarTransicoes(transicoes) {
-    return transicoes && transicoes.map(({ simbolo, estado, resultado }) => (
-      <p>
+    return transicoes && transicoes.map(({ simbolo, estado, resultado }, index) => (
+      <p key={index}>
         {`(${estado}, ${simbolo}) = ${resultado}`}
       </p>
     ));
