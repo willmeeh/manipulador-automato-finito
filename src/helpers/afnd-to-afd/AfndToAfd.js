@@ -1,31 +1,32 @@
 import React, { Component, Fragment } from 'react';
-import { Card } from 'antd';
+import { Card, Button } from 'antd';
 import _ from 'lodash';
 
 export default class AfndToAfd extends Component {
 
-    analisar(formPayload) {
+    constructor() {
+        super();
+        this.handleOnClickTransformar = this.handleOnClickTransformar.bind(this)
+    }
+
+    analisar() {
+        const { formPayload } = this.props;
         if (formPayload.transicoes) {
 
-            let novoState = {};
             const estadosFinais = formPayload.estadosFinais;
             const simbolos = formPayload.simbolos;
             const transicoes = this.estadoParaLista(this.agruparEstados(formPayload.transicoes));
 
             let novoEstado = undefined;
 
-
             var max = 0;
 
             while (((novoEstado = this.proximoEstado(transicoes)) !== undefined) && max < 2) {
                 max++;
-                console.log(max, "novoEstado, transicoes", novoEstado, transicoes);
 
                 simbolos.forEach((novoSimbolo) => {
                     novoSimbolo = novoSimbolo + '';
                     let resultados = [];
-
-                    console.log('Para o simbolo ', novoSimbolo);
 
                     novoEstado.forEach((estado) => {
                         transicoes.forEach((trasicao) => {
@@ -55,7 +56,6 @@ export default class AfndToAfd extends Component {
 
             let trasicoes = this.joinDoWill(transicoes)
             let novosEstadosFinais = [];
-            console.log(estadosFinais);
             estadosFinais.forEach((estadoFinal) => {
                 trasicoes.forEach((trasicao) => {
                     if (trasicao.estado.includes(estadoFinal)) {
@@ -66,8 +66,13 @@ export default class AfndToAfd extends Component {
                 });
             });
 
-            console.log(novosEstadosFinais);
-            console.log(trasicoes);
+            return {
+                simbolos: formPayload.simbolos,
+                estados: formPayload.estados,
+                trasicoes: trasicoes,
+                estadoInicial: formPayload.estadoInicial,
+		        estadosFinais: novosEstadosFinais,
+            }
         }
     };
 
@@ -163,6 +168,10 @@ export default class AfndToAfd extends Component {
         return indexRetorno;
     }
 
+    handleOnClickTransformar() {
+        const novoEstado = this.analisar();
+        this.props.onAfndToAfd(novoEstado);
+    }
 
     render() {
         const cardStyle = {
@@ -171,7 +180,12 @@ export default class AfndToAfd extends Component {
         return (
             <Fragment>
                 <Card style={cardStyle}>
-                    <h1>{this.analisar(this.props.formPayload)}</h1>
+                    <Button
+                        type="primary"
+                        onClick={this.handleOnClickTransformar}
+                    >
+                        Transformar AFND para AFD
+                    </Button>
                 </Card>
             </Fragment>
         );

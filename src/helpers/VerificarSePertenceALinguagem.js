@@ -6,7 +6,7 @@ import { agruparTransicoesPorEstado } from './index';
 
 const { Search } = Input;
 
-export default class VerificadorAfnAfnd extends Component {
+export default class VerificarSePertenceALinguagem extends Component {
 
   state = {
     simbolosASeremTestados: ['0', '0', '1'],
@@ -52,17 +52,11 @@ export default class VerificadorAfnAfnd extends Component {
       });
 
       if (!encontrouCaminho) {
-        console.log('não encontrou o caminho');
         return {
           transicoes,
           pertenceALinguagem: false
         };
       }
-    });
-
-    console.log({
-      transicoes,
-      pertenceALinguagem: true
     });
 
     return {
@@ -88,7 +82,6 @@ export default class VerificadorAfnAfnd extends Component {
 
   	//Simbolos
 	addSimbolo = (s) => {
-    console.log('s', s)
 		if (s) {
       this.setState({
         simbolosASeremTestados: [...this.state.simbolosASeremTestados, s]

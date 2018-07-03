@@ -96,7 +96,6 @@ class InputForm extends Component {
 	}
 	//Estados
 	addEstado = (e) => {
-		console.log(e);
 		if (e !== undefined && e !== null && e !== '') {
 			let alreadyContains = this.state.estados.indexOf(e) > -1 || this.state.simbolos.indexOf(e) > -1;
 			if (!alreadyContains) {

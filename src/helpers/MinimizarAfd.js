@@ -3,7 +3,7 @@ import { Card } from 'antd';
 
 import { getTransicoesDoEstadoInicial } from './index';
 
-export default class VerificadorAfnAfnd extends Component {
+export default class MinimizarAfd extends Component {
 
   analisar(formPayload) {
 		if (formPayload.transicoes) {
