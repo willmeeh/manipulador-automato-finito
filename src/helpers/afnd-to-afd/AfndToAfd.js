@@ -35,6 +35,13 @@ export default class AfndToAfd extends Component {
                                 if (_.includes(trasicao.estado, estado)) {
                                     if (simboloNum === novoSimbolo) {
                                         resultados = _.merge(resultados, trasicao.resultado);
+                                        if (resultados) {
+                                            let uniqueEstado = resultados.filter(function (elem, pos) {
+                                                return resultados.indexOf(elem) == pos;
+                                            });
+                                            resultados = uniqueEstado;
+                                        }
+
                                     }
                                 }
                             }
@@ -56,8 +63,13 @@ export default class AfndToAfd extends Component {
 
             let trasicoes = this.joinDoWill(transicoes)
             let novosEstadosFinais = [];
+            let novosEstadosEstados = [];
             estadosFinais.forEach((estadoFinal) => {
                 trasicoes.forEach((trasicao) => {
+                    if (!_.includes(novosEstadosEstados, trasicao.estado)) {
+                        novosEstadosEstados.push(trasicao.estado);
+                    }
+
                     if (trasicao.estado.includes(estadoFinal)) {
                         if (!_.includes(novosEstadosFinais, trasicao.estado)) {
                             novosEstadosFinais.push(trasicao.estado);
@@ -66,13 +78,15 @@ export default class AfndToAfd extends Component {
                 });
             });
 
-            return {
+
+            const retorno = {
                 simbolos: formPayload.simbolos,
-                estados: formPayload.estados,
+                estados: novosEstadosEstados,
                 trasicoes: trasicoes,
                 estadoInicial: formPayload.estadoInicial,
-		        estadosFinais: novosEstadosFinais,
+                estadosFinais: novosEstadosFinais,
             }
+            return retorno;
         }
     };
 
@@ -94,7 +108,16 @@ export default class AfndToAfd extends Component {
             }
         });
 
-        return estado;
+        if (estado) {
+            var uniqueEstado = estado.filter(function (elem, pos) {
+                return estado.indexOf(elem) == pos;
+            });
+
+            return uniqueEstado;
+        } else {
+            return estado;
+        }
+
     }
 
     contemEstado(transicoes, estado) {
