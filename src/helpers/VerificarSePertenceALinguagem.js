@@ -14,15 +14,21 @@ export default class VerificarSePertenceALinguagem extends Component {
   }
 
   verificarSePertenceALinguagem(formPayload) {
-		if (formPayload.transicoes) {
+    if (formPayload.transicoes) {
       const testeTransicao = this.testarSimbolos(formPayload);
-      return testeTransicao.pertenceALinguagem;
+      return testeTransicao;
     }
   };
 
   exibirAceitaOuRejeita(formPayload) {
-    const pertenceALinguagem = this.verificarSePertenceALinguagem(formPayload);
-    return pertenceALinguagem ? 'Aceita' : 'Rejeita'
+    let testeTransicao = this.verificarSePertenceALinguagem(formPayload);
+    if (testeTransicao && testeTransicao.transicoes && testeTransicao.transicoes[testeTransicao.transicoes.length-1]) {
+      console.log("exibirAceitaOuRejeita", testeTransicao, formPayload.estadosFinais);
+      testeTransicao.pertenceALinguagem = _.includes(formPayload.estadosFinais, testeTransicao.transicoes[testeTransicao.transicoes.length-1].resultado);
+    } else {
+      return '';
+    }
+    return testeTransicao.pertenceALinguagem ? 'Aceita' : 'Rejeita'
   }
 
   exibirTransicoes(formPayload) {
@@ -43,7 +49,7 @@ export default class VerificarSePertenceALinguagem extends Component {
       const possiveisCaminhos = transicoesPorEstado[estadoAtual];
 
       let encontrouCaminho = false;
-      possiveisCaminhos.forEach((caminho)=> {
+      possiveisCaminhos.forEach((caminho) => {
         if (caminho.simbolo === simbolo) {
           transicoes.push(caminho);
           encontrouCaminho = true;
@@ -80,43 +86,43 @@ export default class VerificarSePertenceALinguagem extends Component {
     return transicoesSimplificadas;
   }
 
-  	//Simbolos
-	addSimbolo = (s) => {
-		if (s) {
+  //Simbolos
+  addSimbolo = (s) => {
+    if (s) {
       this.setState({
         simbolosASeremTestados: [...this.state.simbolosASeremTestados, s]
       });
-		}
-		this.setState({
-			simbolo: ''
-		});
-	}
+    }
+    this.setState({
+      simbolo: ''
+    });
+  }
 
   simboloOnChange = (e) => {
-		e.preventDefault();
-		const value = e.target.value;
-		if (!_.includes(this.props.formPayload.estados, value)) {
-			this.setState({
-				simbolo: value.charAt(value.length - 1)
-			});
-		}
+    e.preventDefault();
+    const value = e.target.value;
+    if (!_.includes(this.props.formPayload.estados, value)) {
+      this.setState({
+        simbolo: value.charAt(value.length - 1)
+      });
+    }
   }
 
   delSimbolo = (index) => {
-		let newList = this.state.simbolosASeremTestados;
-		let s = newList.splice(index, 1);
-		this.setState({
-			simbolosASeremTestados: newList,
-			simbolo: s
-		});
-	}
+    let newList = this.state.simbolosASeremTestados;
+    let s = newList.splice(index, 1);
+    this.setState({
+      simbolosASeremTestados: newList,
+      simbolo: s
+    });
+  }
 
-	render() {
-		const cardStyle = {
-			textAlign: 'center',
-		};
-		return (
-			<Fragment>
+  render() {
+    const cardStyle = {
+      textAlign: 'center',
+    };
+    return (
+      <Fragment>
         <Card style={cardStyle}>
           <h2>Verificar se sepertence a linguagem:</h2>
           <Card
@@ -151,8 +157,8 @@ export default class VerificarSePertenceALinguagem extends Component {
             <h1>{this.exibirTransicoes(this.props.formPayload)}</h1>
             <h1>{this.exibirAceitaOuRejeita(this.props.formPayload)}</h1>
           </Card>
-				</Card>
-			</Fragment>
-		);
-	}
+        </Card>
+      </Fragment>
+    );
+  }
 }

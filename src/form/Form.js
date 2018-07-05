@@ -13,7 +13,7 @@ class InputForm extends Component {
 		simbolos: ['0', '1'],
 		estados: ['q0', 'q1', 'q2', 'q'],
 		estadoInicial: 'q0',
-		estadosFinais: ['q2'],
+		estadosFinais: ['q1'],
 		transicoes: [
 			{ // (q0,0) = q2
 				estado: 'q0',
@@ -58,9 +58,14 @@ class InputForm extends Component {
 		]
 	};
 
-	componentDidMount() {
+	componentDidMount = () => {
 		this.props.handleStateChange(this.state);
 	}
+
+	update = () => {
+		this.props.handleStateChange(this.state);
+	}
+
 	//Simbolos
 	addSimbolo = (s) => {
 		if (s !== undefined && s !== null && s !== '') {
@@ -321,6 +326,10 @@ class InputForm extends Component {
 								<Button onClick={this.printConsole}
 									type="primary">
 									Print state console
+								</Button>
+								<Button onClick={this.update}
+									type="primary">
+									Update
 								</Button>
 							</Fragment>
 						}
