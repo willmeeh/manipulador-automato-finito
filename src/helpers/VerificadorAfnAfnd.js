@@ -6,7 +6,36 @@ import { agruparTransicoesPorEstado } from './index';
 
 export default class VerificadorAfnAfnd extends Component {
 
-  analisar(formPayload) {
+
+	analisar(formPayload) {
+		if (formPayload && formPayload.transicoes) {
+			console.log(formPayload.transicoes);
+			let transicoesPorEstado = _.map(formPayload.transicoes, _.clone);
+
+			transicoesPorEstado.forEach((transicao) => {
+				delete transicao.resultado;
+			});
+
+			let trasicoesUnicas = _.uniqWith(transicoesPorEstado, _.isEqual);
+			console.log(transicoesPorEstado.length, trasicoesUnicas.length);
+
+			if (transicoesPorEstado.length !== trasicoesUnicas.length) {
+				return 'Autômato finito não determinístico (AFND)';
+			} else {
+				return 'Autômato finito determinístico (AFD)';
+			}
+		}
+		return '';
+	}
+
+	uniq = (arrArg) => {
+		return arrArg.filter((elem, pos, arr) => {
+			return arr.indexOf(elem) == pos;
+		});
+	}
+
+
+	analisar2(formPayload) {
 		if (formPayload.transicoes) {
 			const transicoesPorEstado = agruparTransicoesPorEstado(formPayload.transicoes);
 			const resultados = this.agruparResultados(transicoesPorEstado);

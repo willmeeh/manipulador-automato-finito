@@ -22,13 +22,17 @@ export default class VerificarSePertenceALinguagem extends Component {
 
   exibirAceitaOuRejeita(formPayload) {
     let testeTransicao = this.verificarSePertenceALinguagem(formPayload);
-    if (testeTransicao && testeTransicao.transicoes && testeTransicao.transicoes[testeTransicao.transicoes.length-1]) {
+    let tamanhoigual = false;
+    if (testeTransicao && testeTransicao.transicoes && testeTransicao.transicoes[testeTransicao.transicoes.length - 1]) {
       console.log("exibirAceitaOuRejeita", testeTransicao, formPayload.estadosFinais);
-      testeTransicao.pertenceALinguagem = _.includes(formPayload.estadosFinais, testeTransicao.transicoes[testeTransicao.transicoes.length-1].resultado);
+      testeTransicao.pertenceALinguagem = _.includes(formPayload.estadosFinais, testeTransicao.transicoes[testeTransicao.transicoes.length - 1].resultado);
+
+      tamanhoigual = (this.state.simbolosASeremTestados.length === testeTransicao.transicoes.length);
+
     } else {
       return '';
     }
-    return testeTransicao.pertenceALinguagem ? 'Aceita' : 'Rejeita'
+    return (testeTransicao.pertenceALinguagem && tamanhoigual) ? 'Aceita' : 'Rejeita'
   }
 
   exibirTransicoes(formPayload) {
@@ -48,21 +52,26 @@ export default class VerificarSePertenceALinguagem extends Component {
 
       const possiveisCaminhos = transicoesPorEstado[estadoAtual];
 
-      let encontrouCaminho = false;
-      possiveisCaminhos.forEach((caminho) => {
-        if (caminho.simbolo === simbolo) {
-          transicoes.push(caminho);
-          encontrouCaminho = true;
-          estadoAtual = caminho.resultado;
-        }
-      });
+      if (possiveisCaminhos) {
 
-      if (!encontrouCaminho) {
-        return {
-          transicoes,
-          pertenceALinguagem: false
-        };
+        let encontrouCaminho = false;
+        possiveisCaminhos.forEach((caminho) => {
+          if (caminho.simbolo === simbolo) {
+            transicoes.push(caminho);
+            encontrouCaminho = true;
+            estadoAtual = caminho.resultado;
+          }
+        });
+
+        if (!encontrouCaminho) {
+          return {
+            transicoes,
+            pertenceALinguagem: false
+          };
+        }
       }
+
+
     });
 
     return {

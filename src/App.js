@@ -65,10 +65,6 @@ class App extends Component {
             <Col md={8}>
               <TabelaDeTransicoes transicoes={this.state.formPayloadAfndToAfd.trasicoes}/>
             </Col>
-            <Col md={8}>
-              <VerificadorAfnAfnd formPayload={this.state.formPayloadAfndToAfd} />
-              <VerificarSePertenceALinguagem formPayload={this.state.formPayloadAfndToAfd} />
-            </Col>
           </Row>
         }
       </div>
