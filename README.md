@@ -1,4 +1,4 @@
-# Grammar analyzer
+# Manipulador de aotômato finito
 Um projeto dedicado a disciplina de Linguagens Formais do curso de Ciência da Computação UNISC 2018/1.
 
 ## Utilização
