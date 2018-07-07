@@ -1,4 +1,4 @@
-# Manipulador de aotômato finito
+# Manipulador de autômato finito
 Um projeto dedicado a disciplina de Linguagens Formais do curso de Ciência da Computação UNISC 2018/1.
 
 ## Utilização
